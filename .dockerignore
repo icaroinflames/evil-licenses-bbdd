@@ -1,0 +1,5 @@
+Dockerfile
+
+#si comentamos esto el contenido de la bbdd también se copia y creamos persistencia en local
+db-data/
+

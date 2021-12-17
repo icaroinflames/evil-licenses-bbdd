@@ -10,9 +10,9 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_DB: evil-licenses
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: admin
+      POSTGRES_DB: $DBNAME
+      POSTGRES_PASSWORD: $DBPASS
+      POSTGRES_USER: $DBUSER
     restart: unless-stopped
 
   pgadmin:
@@ -20,8 +20,8 @@ services:
     image: dpage/pgadmin4:6.1
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: secret
+      PGADMIN_DEFAULT_EMAIL: $PGADMIN_DEFAULT_EMAIL
+      PGADMIN_DEFAULT_PASSWORD: $PGADMIN_DEFAULT_PASSWORD
       PGADMIN_LISTEN_PORT: 5050
     ports:
       - 5051:5050
