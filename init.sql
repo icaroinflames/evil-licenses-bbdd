@@ -1,6 +1,4 @@
--- Table: public.users
-
--- DROP TABLE IF EXISTS public.users;
+-- USERS --
 
 CREATE TABLE IF NOT EXISTS public.users
 (
@@ -11,7 +9,10 @@ CREATE TABLE IF NOT EXISTS public.users
     CONSTRAINT email UNIQUE (email)
 );
 
-CREATE TABLE public.roles
+ALTER TABLE IF EXISTS public.users
+    OWNER to admin;
+
+CREATE TABLE IF NOT EXISTS public.roles
 (
     rol_id serial,
     name character varying(50),
@@ -19,15 +20,57 @@ CREATE TABLE public.roles
     PRIMARY KEY (rol_id)
 );
 
-CREATE TABLE public.user_roles
+ALTER TABLE IF EXISTS public.roles
+    OWNER to admin;
+
+CREATE TABLE IF NOT EXISTS public.user_roles
 (
     user_id integer NOT NULL,
     role_id integer NOT NULL,
     PRIMARY KEY (user_id, role_id)
 );
 
-ALTER TABLE IF EXISTS public.roles
+ALTER TABLE IF EXISTS public.user_roles
     OWNER to admin;
 
-ALTER TABLE IF EXISTS public.users
+-- LICENSES --
+
+CREATE TABLE IF NOT EXISTS public.products
+(
+    product_id integer NOT NULL,
+    description character varying(255),
+    PRIMARY KEY (product_id)
+);
+
+ALTER TABLE IF EXISTS public.products
     OWNER to admin;
+
+CREATE TABLE IF NOT EXISTS public.license_types
+(
+    license_type_id serial,
+    product_id integer NOT NULL,
+    duration integer NOT NULL
+
+);
+
+ALTER TABLE IF EXISTS public.license_types
+    OWNER to admin;
+
+CREATE TABLE IF NOT EXISTS public.liceneses
+(
+    license_id serial,
+    user_id integer,
+    mail character varying(255),
+    PRIMARY KEY (license_id, user_id, mail)
+);
+
+ALTER TABLE IF EXISTS public.liceneses
+    OWNER to admin;
+
+-- TABLES INITIALIZATION --
+INSERT INTO public.products(product_id, description) VALUES (0, 'EVIL PRODUCT ONE');
+INSERT INTO public.products(product_id, description) VALUES (1, 'EVIL PRODUCT TWO');
+
+INSERT INTO public.roles (name, description) VALUES ('admin', 'can create basic users an licenses');
+INSERT INTO public.roles (name, description) VALUES ('user', 'can admin his own licenses');
+
