@@ -14,10 +14,10 @@ ALTER TABLE IF EXISTS public.users
 
 CREATE TABLE IF NOT EXISTS public.roles
 (
-    rol_id serial,
+    role_id serial,
     name character varying(50),
     description character varying(255),
-    PRIMARY KEY (rol_id)
+    PRIMARY KEY (role_id)
 );
 
 ALTER TABLE IF EXISTS public.roles
